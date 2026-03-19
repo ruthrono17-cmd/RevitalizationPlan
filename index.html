@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rotaract Daystar Athi River — Revitalization Plan</title>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Quicksand:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #E8537A;
+    --pink-light: #F4A0B5;
+    --navy: #1B2A4A;
+    --navy-mid: #2E4270;
+    --yellow: #F2C12E;
+    --yellow-light: #FDF0B0;
+    --orange: #F07A3A;
+    --orange-light: #FAC09A;
+    --white: #FEFEFE;
+    --cream: #F5EFE0;
+    --tan: #D6C9A8;
+    --kraft: #A8895A;
+    --ink: #1B1B1B;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background-color: #B8A07A;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.12'/%3E%3C/svg%3E");
+    font-family: 'Quicksand', sans-serif;
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── BACKGROUND SHAPES ── */
+  .bg-shapes { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+  .shape { position: absolute; opacity: 0.85; }
+  .shape-star { width: 90px; height: 90px; background: var(--pink); clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); top: 3%; left: 2%; transform: rotate(-15deg); }
+  .shape-blob1 { width: 80px; height: 100px; background: var(--navy); border-radius: 60% 40% 55% 45% / 50% 60% 40% 50%; bottom: 8%; right: 3%; transform: rotate(20deg); }
+  .shape-tri { width: 0; height: 0; border-left: 50px solid transparent; border-right: 50px solid transparent; border-bottom: 90px solid var(--yellow); top: 5%; right: 5%; transform: rotate(10deg); }
+  .shape-rect { width: 70px; height: 28px; background: var(--orange); transform: rotate(-30deg); bottom: 15%; left: 1%; border-radius: 3px; }
+  .shape-rect2 { width: 60px; height: 22px; background: var(--yellow); transform: rotate(25deg); bottom: 25%; left: 3%; border-radius: 3px; }
+  .shape-blob2 { width: 70px; height: 85px; background: var(--pink); border-radius: 40% 60% 50% 50% / 60% 40% 55% 45%; top: 35%; left: 0.5%; transform: rotate(-10deg); }
+  .shape-circle { width: 60px; height: 60px; background: var(--orange); border-radius: 50%; top: 45%; right: 1.5%; }
+  .shape-leaf { width: 65px; height: 90px; background: var(--navy); border-radius: 60% 40% 60% 40%; top: 65%; right: 2%; transform: rotate(-25deg); }
+  .shape-strip { width: 110px; height: 18px; background: var(--yellow); transform: rotate(35deg); top: 55%; left: 0%; border-radius: 3px; }
+
+  /* ── TAPE ── */
+  .tape { position: absolute; background: rgba(200,185,150,0.55); border-top: 1px solid rgba(255,255,255,0.4); border-bottom: 1px solid rgba(180,160,120,0.3); z-index: 10; }
+  .tape-h  { width: 90px; height: 22px; left: 50%; transform: translateX(-50%); top: -11px; }
+  .tape-h2 { width: 80px; height: 22px; left: 60%; top: -11px; transform: translateX(-50%) rotate(3deg); }
+  .tape-corner { width: 55px; height: 20px; right: 20px; top: -10px; transform: rotate(-8deg); }
+
+  /* ── LAYOUT ── */
+  .page { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 0 20px 80px; }
+
+  /* ════════════════════════════════
+     HEADER BANNER
+  ════════════════════════════════ */
+  .header-wrap { position: relative; margin: 30px auto 10px; max-width: 860px; }
+
+  .header-card {
+    background: var(--white);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 5px 8px 28px rgba(0,0,0,0.22), -2px -2px 10px rgba(0,0,0,0.06);
+    clip-path: polygon(0 1.5%, 1% 0, 99% 0.3%, 100% 1.5%, 99.5% 98.5%, 98.5% 100%, 1% 99.5%, 0 98%);
+  }
+
+  /* colour stripes across the top of the card */
+  .header-stripes {
+    display: flex;
+    height: 10px;
+    width: 100%;
+  }
+  .header-stripes span { flex: 1; }
+  .hs-navy   { background: var(--navy); }
+  .hs-pink   { background: var(--pink); }
+  .hs-orange { background: var(--orange); }
+  .hs-yellow { background: var(--yellow); }
+  .hs-pink2  { background: var(--pink-light); }
+  .hs-navy2  { background: var(--navy-mid); }
+
+  .header-inner { padding: 36px 52px 44px; }
+
+  /* decorative torn strip behind the title */
+  .header-torn {
+    position: absolute;
+    left: 0; right: 0;
+    top: 48px;
+    height: 72px;
+    background: var(--cream);
+    opacity: 0.55;
+    clip-path: polygon(0 18%, 2% 0, 5% 22%, 8% 4%, 12% 20%, 15% 2%, 18% 24%, 22% 6%, 26% 22%, 30% 0, 34% 20%, 38% 4%, 42% 18%, 46% 2%, 50% 22%, 54% 6%, 58% 20%, 62% 0, 66% 18%, 70% 4%, 74% 24%, 78% 6%, 82% 22%, 86% 2%, 90% 20%, 94% 4%, 98% 22%, 100% 8%, 100% 100%, 0 100%);
+  }
+
+  /* floating coloured blobs inside the banner */
+  .header-blob {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.12;
+  }
+  .hb1 { width: 180px; height: 180px; background: var(--pink); top: -40px; right: 60px; }
+  .hb2 { width: 120px; height: 120px; background: var(--navy); bottom: -20px; left: 40px; }
+  .hb3 { width: 90px;  height: 90px;  background: var(--orange); top: 10px; left: 200px; }
+
+  /* small confetti-dot pattern */
+  .header-dots {
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, var(--pink) 1.5px, transparent 1.5px),
+      radial-gradient(circle, var(--navy) 1.5px, transparent 1.5px),
+      radial-gradient(circle, var(--orange) 1.5px, transparent 1.5px);
+    background-size: 38px 38px, 52px 52px, 44px 44px;
+    background-position: 0 0, 19px 19px, 10px 30px;
+    opacity: 0.07;
+    pointer-events: none;
+  }
+
+  .club-tag {
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--navy-mid);
+    letter-spacing: 0.05em;
+    margin-bottom: 6px;
+    display: block;
+    position: relative;
+    z-index: 2;
+  }
+  .header-title {
+    font-family: 'Caveat', cursive;
+    font-size: clamp(3rem, 6.5vw, 4.8rem);
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1.05;
+    margin-bottom: 18px;
+    position: relative;
+    z-index: 2;
+    text-shadow: 1px 2px 0 rgba(255,255,255,0.6);
+  }
+  .header-subtitle {
+    display: inline-block;
+    background: var(--tan);
+    color: var(--navy);
+    font-family: 'Quicksand', sans-serif;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 8px 22px;
+    letter-spacing: 0.05em;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* colour pill badges row */
+  .header-pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 18px;
+    position: relative;
+    z-index: 2;
+  }
+  .hpill {
+    font-family: 'Caveat', cursive;
+    font-size: 0.95rem;
+    font-weight: 700;
+    padding: 5px 14px;
+    color: white;
+  }
+  .hpill-navy   { background: var(--navy); transform: rotate(-1deg); }
+  .hpill-pink   { background: var(--pink); transform: rotate(1.2deg); }
+  .hpill-orange { background: var(--orange); transform: rotate(-0.5deg); }
+
+  .semester-badge {
+    position: absolute;
+    top: 20px; right: 28px;
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Caveat', cursive;
+    font-size: 1.05rem;
+    font-weight: 700;
+    padding: 6px 18px;
+    transform: rotate(2deg);
+    box-shadow: 2px 3px 8px rgba(0,0,0,0.25);
+    z-index: 3;
+  }
+  .motto {
+    position: absolute;
+    bottom: 14px; right: 28px;
+    background: var(--pink);
+    color: white;
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.88rem;
+    padding: 5px 16px;
+    transform: rotate(-2deg);
+    box-shadow: 2px 3px 8px rgba(0,0,0,0.2);
+    z-index: 3;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    font-family: 'Caveat', cursive;
+    font-size: 1.55rem;
+    font-weight: 700;
+    color: var(--white);
+    margin: 52px 0 18px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-shadow: 1px 2px 4px rgba(0,0,0,0.35);
+  }
+  .section-label::after { content: ''; flex: 1; height: 2px; background: rgba(255,255,255,0.3); border-radius: 2px; }
+
+  /* ── WHERE WE ARE (narrative) ── */
+  .narrative-card {
+    background: var(--cream);
+    padding: 36px 40px 32px;
+    position: relative;
+    box-shadow: 3px 5px 16px rgba(0,0,0,0.15);
+    clip-path: polygon(0 1.5%, 1% 0, 99.5% 0.3%, 100% 1.5%, 99.5% 98.5%, 98.5% 100%, 1% 99.5%, 0 98%);
+    transform: rotate(-0.3deg);
+  }
+  .narrative-title {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--navy);
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 3px solid var(--yellow);
+    display: inline-block;
+  }
+  .narrative-body {
+    font-size: 0.92rem;
+    line-height: 1.8;
+    color: #333;
+    font-weight: 600;
+  }
+  .narrative-body p { margin-bottom: 12px; }
+  .narrative-body p:last-child { margin-bottom: 0; }
+  .narrative-highlight {
+    background: var(--yellow-light);
+    padding: 2px 6px;
+    border-radius: 2px;
+    font-weight: 700;
+  }
+  .narrative-pink {
+    background: #fde8ef;
+    padding: 2px 6px;
+    border-radius: 2px;
+    font-weight: 700;
+    color: #9a2040;
+  }
+  .stat-row {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin: 18px 0;
+  }
+  .stat-pill {
+    background: var(--navy);
+    color: var(--white);
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 7px 18px;
+    box-shadow: 2px 3px 6px rgba(0,0,0,0.18);
+  }
+  .stat-pill.sp-pink   { background: var(--pink); transform: rotate(1deg); }
+  .stat-pill.sp-orange { background: var(--orange); transform: rotate(-1deg); }
+  .stat-pill.sp-yellow { background: var(--yellow); color: var(--navy); transform: rotate(0.5deg); }
+
+  /* ── INTERVENTION CARDS ── */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 28px;
+    align-items: start;
+  }
+  .int-card {
+    background: var(--white);
+    padding: 32px 28px 28px;
+    position: relative;
+    box-shadow: 3px 5px 16px rgba(0,0,0,0.15), -1px -1px 6px rgba(0,0,0,0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    animation: fadeUp 0.5s ease both;
+  }
+  .int-card:nth-child(1) { transform: rotate(-1.2deg); }
+  .int-card:nth-child(2) { transform: rotate(0.8deg); }
+  .int-card:nth-child(3) { transform: rotate(-0.5deg); }
+  .int-card:nth-child(4) { transform: rotate(1.5deg); }
+  .int-card:nth-child(5) { transform: rotate(-1deg); }
+  .int-card:hover { transform: rotate(0deg) translateY(-4px) !important; box-shadow: 6px 10px 28px rgba(0,0,0,0.2); z-index: 5; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; } }
+
+  .card-number {
+    position: absolute; top: -14px; left: 22px;
+    font-family: 'Caveat', cursive; font-size: 0.85rem; font-weight: 700;
+    color: white; padding: 4px 12px;
+    box-shadow: 2px 3px 8px rgba(0,0,0,0.2);
+    letter-spacing: 0.04em;
+  }
+  .n1 { background: var(--pink); }
+  .n2 { background: var(--navy); }
+  .n3 { background: var(--orange); }
+  .n4 { background: var(--pink); }
+  .n5 { background: var(--navy-mid); }
+
+  .card-week {
+    font-family: 'Caveat', cursive; font-size: 0.9rem; font-weight: 600;
+    color: var(--kraft); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 6px;
+  }
+  .card-title {
+    font-family: 'Caveat', cursive; font-size: 1.65rem; font-weight: 700;
+    color: var(--ink); line-height: 1.15; margin-bottom: 12px;
+  }
+  .card-body { font-size: 0.88rem; line-height: 1.65; color: #3a3a3a; font-weight: 600; }
+  .card-tag {
+    display: inline-block; margin-top: 14px;
+    font-family: 'Caveat', cursive; font-size: 0.9rem; font-weight: 700;
+    padding: 4px 12px; border-radius: 2px;
+  }
+  .tag-pink   { background: #fde8ef; color: #9a2040; }
+  .tag-navy   { background: #dce4f0; color: var(--navy); }
+  .tag-orange { background: var(--orange-light); color: #7a3010; }
+  .tag-yellow { background: var(--yellow-light); color: #6a5000; }
+
+  .card-points { margin-top: 12px; list-style: none; display: flex; flex-direction: column; gap: 7px; }
+  .card-points li {
+    font-size: 0.85rem; font-weight: 600; color: #444;
+    padding-left: 18px; position: relative; line-height: 1.55;
+  }
+  .card-points li::before { content: '✦'; position: absolute; left: 0; font-size: 0.52rem; top: 5px; color: var(--pink); }
+  .n2-card li::before { color: var(--navy); }
+  .n3-card li::before { color: var(--orange); }
+  .n4-card li::before { color: var(--pink); }
+  .n5-card li::before { color: var(--navy-mid); }
+
+  /* ── NEXT SEMESTER ── */
+  .next-sem-card {
+    background: var(--navy); color: white; padding: 36px 36px 32px;
+    position: relative;
+    box-shadow: 4px 6px 20px rgba(0,0,0,0.3);
+    clip-path: polygon(0.3% 1%, 1% 0, 99% 0.3%, 100% 1%, 99.7% 99%, 99% 100%, 0.5% 99.7%, 0 99%);
+    transform: rotate(-0.4deg);
+    transition: transform 0.2s;
+  }
+  .next-sem-card:hover { transform: rotate(0deg); }
+  .next-sem-title { font-family: 'Caveat', cursive; font-size: 1.9rem; font-weight: 700; color: var(--orange); margin-bottom: 6px; }
+  .next-sem-sub { font-size: 0.85rem; color: rgba(255,255,255,0.6); margin-bottom: 20px; font-weight: 600; }
+  .next-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 14px; }
+  .next-item { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); padding: 16px 18px; }
+  .next-item-title { font-family: 'Caveat', cursive; font-size: 1.1rem; font-weight: 700; color: var(--orange); margin-bottom: 8px; }
+  .next-item-body { font-size: 0.81rem; color: rgba(255,255,255,0.82); line-height: 1.6; font-weight: 600; }
+
+  /* ── MEETING REDESIGN CARD (standalone wide card) ── */
+  .meeting-card {
+    background: var(--cream);
+    padding: 34px 38px 30px;
+    position: relative;
+    box-shadow: 3px 5px 16px rgba(0,0,0,0.15);
+    clip-path: polygon(0 1%, 0.5% 0, 99.5% 0.5%, 100% 1.5%, 99.5% 99%, 99% 100%, 0.5% 99.5%, 0 98.5%);
+    transform: rotate(0.4deg);
+    transition: transform 0.2s;
+    margin-top: 8px;
+  }
+  .meeting-card:hover { transform: rotate(0deg); }
+  .meeting-card-title {
+    font-family: 'Caveat', cursive; font-size: 1.7rem; font-weight: 700;
+    color: var(--navy); margin-bottom: 6px;
+  }
+  .meeting-card-sub { font-size: 0.85rem; color: #666; font-weight: 600; margin-bottom: 22px; }
+  .meeting-phases {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+    gap: 14px;
+  }
+  .phase-block { padding: 16px 18px; position: relative; }
+  .phase-num {
+    font-family: 'Caveat', cursive; font-size: 2rem; font-weight: 700;
+    opacity: 0.18; position: absolute; top: 4px; right: 12px; line-height: 1;
+  }
+  .phase-title { font-family: 'Caveat', cursive; font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; }
+  .phase-body { font-size: 0.8rem; font-weight: 600; line-height: 1.6; }
+  .ph-pink   { background: #fde8ef; color: #7a1b35; }
+  .ph-navy   { background: #dce4f0; color: var(--navy); }
+  .ph-orange { background: var(--orange-light); color: #7a3010; }
+  .ph-yellow { background: var(--yellow-light); color: #5a4000; }
+
+  /* ── FEEDBACK ── */
+  .feedback-card {
+    background: var(--cream); padding: 36px 36px 32px; position: relative;
+    box-shadow: 3px 5px 16px rgba(0,0,0,0.15);
+    clip-path: polygon(0 1.5%, 1% 0, 99.5% 0.3%, 100% 1.5%, 99.5% 98.5%, 98.5% 100%, 1% 99.5%, 0 98.5%);
+    transform: rotate(0.5deg);
+  }
+  .feedback-header { font-family: 'Caveat', cursive; font-size: 1.8rem; font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+  .feedback-sub { font-size: 0.85rem; color: #666; font-weight: 600; margin-bottom: 20px; }
+  .fb-name-row { display: flex; gap: 12px; margin-bottom: 14px; flex-wrap: wrap; }
+  .fb-input {
+    font-family: 'Caveat', cursive; font-size: 1rem;
+    background: white; border: 2px solid var(--tan); padding: 10px 14px;
+    outline: none; flex: 1; min-width: 150px; color: var(--ink);
+    transition: border-color 0.2s; box-shadow: inset 1px 1px 4px rgba(0,0,0,0.06);
+  }
+  .fb-input:focus { border-color: var(--pink); }
+  .fb-textarea {
+    font-family: 'Caveat', cursive; font-size: 1rem;
+    background: white; border: 2px solid var(--tan); padding: 14px;
+    outline: none; width: 100%; min-height: 110px; resize: vertical;
+    color: var(--ink); transition: border-color 0.2s;
+    box-shadow: inset 1px 1px 4px rgba(0,0,0,0.06);
+    display: block; margin-bottom: 14px;
+  }
+  .fb-textarea:focus { border-color: var(--pink); }
+  .category-row { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px; }
+  .cat-btn {
+    font-family: 'Caveat', cursive; font-size: 0.95rem; font-weight: 700;
+    padding: 6px 16px; border: 2px solid var(--tan); background: white;
+    cursor: pointer; color: #666; transition: all 0.15s;
+  }
+  .cat-btn:hover, .cat-btn.active { background: var(--navy); color: var(--white); border-color: var(--navy); }
+  .submit-btn {
+    font-family: 'Caveat', cursive; font-size: 1.1rem; font-weight: 700;
+    background: var(--pink); color: white; border: none; padding: 11px 32px;
+    cursor: pointer; box-shadow: 2px 3px 8px rgba(0,0,0,0.2);
+    transition: all 0.15s; letter-spacing: 0.03em;
+  }
+  .submit-btn:hover { background: var(--navy); transform: translateY(-2px); }
+  .submit-btn:active { transform: translateY(0); }
+
+  .thoughts-board { margin-top: 24px; }
+  .thoughts-title {
+    font-family: 'Caveat', cursive; font-size: 1.2rem; font-weight: 700;
+    color: var(--navy-mid); margin-bottom: 12px;
+    border-bottom: 2px dashed var(--tan); padding-bottom: 6px;
+  }
+  .thought-notes { display: flex; flex-wrap: wrap; gap: 14px; min-height: 60px; }
+  .thought-note {
+    padding: 14px 18px; font-family: 'Caveat', cursive; font-size: 1rem; font-weight: 600;
+    position: relative; box-shadow: 2px 3px 10px rgba(0,0,0,0.13);
+    max-width: 260px; line-height: 1.5;
+    animation: popIn 0.3s ease both; cursor: pointer; transition: transform 0.15s;
+  }
+  .thought-note:hover { transform: rotate(0deg) scale(1.03) !important; }
+  @keyframes popIn { from { transform: scale(0.7); opacity: 0; } to { opacity: 1; } }
+  .thought-note .del-btn {
+    position: absolute; top: 4px; right: 7px; font-size: 0.75rem;
+    color: rgba(0,0,0,0.3); cursor: pointer; background: none; border: none;
+    font-family: inherit; line-height: 1;
+  }
+  .thought-note .del-btn:hover { color: var(--pink); }
+  .note-cat { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; opacity: 0.6; margin-bottom: 4px; display: block; }
+  .empty-state { font-family: 'Caveat', cursive; color: #aaa; font-size: 1rem; padding: 16px 0; }
+
+  /* ── FOOTER ── */
+  .footer { text-align: center; margin-top: 60px; padding-bottom: 40px; font-family: 'Caveat', cursive; font-size: 1rem; color: rgba(255,255,255,0.5); }
+
+  @media (max-width: 600px) {
+    .header-inner { padding: 28px 22px 36px; }
+    .cards-grid { grid-template-columns: 1fr; }
+    .next-grid, .meeting-phases { grid-template-columns: 1fr; }
+    .fb-name-row { flex-direction: column; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-shapes">
+  <div class="shape shape-star"></div>
+  <div class="shape shape-blob1"></div>
+  <div class="shape shape-tri"></div>
+  <div class="shape shape-rect"></div>
+  <div class="shape shape-rect2"></div>
+  <div class="shape shape-blob2"></div>
+  <div class="shape shape-circle"></div>
+  <div class="shape shape-leaf"></div>
+  <div class="shape shape-strip"></div>
+</div>
+
+<div class="page">
+
+  <!-- ════════ HEADER ════════ -->
+  <div class="header-wrap">
+    <div class="header-card">
+      <div class="header-stripes">
+        <span class="hs-navy"></span>
+        <span class="hs-pink"></span>
+        <span class="hs-orange"></span>
+        <span class="hs-yellow"></span>
+        <span class="hs-pink2"></span>
+        <span class="hs-navy2"></span>
+        <span class="hs-orange"></span>
+        <span class="hs-pink"></span>
+        <span class="hs-yellow"></span>
+        <span class="hs-navy"></span>
+      </div>
+      <div class="header-dots"></div>
+      <div class="hb1 header-blob"></div>
+      <div class="hb2 header-blob"></div>
+      <div class="hb3 header-blob"></div>
+      <div class="header-inner">
+        <div class="tape tape-h2"></div>
+        <span class="semester-badge">Exec Strategy Session</span>
+        <span class="club-tag">🔵 Rotaract Club of Daystar Athi River</span>
+        <h1 class="header-title">Revitalization<br>Action Plan</h1>
+        <span class="header-subtitle">Ideas, Interventions &amp; the Road Ahead</span>
+        <div class="header-pills">
+          <span class="hpill hpill-navy">📅 Est. 3 years ago</span>
+          <span class="hpill hpill-pink">Under DUSA</span>
+          <span class="hpill hpill-orange">Rotary International affiliate</span>
+        </div>
+      </div>
+      <span class="motto">"Service Above Self"</span>
+    </div>
+  </div>
+
+  <!-- ════════ WHERE WE ARE ════════ -->
+  <div class="section-label">Where we've been — and where we are now</div>
+  <div class="narrative-card">
+    <div class="tape tape-h"></div>
+    <div class="narrative-title">Our Story So Far</div>
+    <div class="narrative-body">
+      <div class="stat-row">
+        <span class="stat-pill">📅 3 years as a club</span>
+        <span class="stat-pill sp-pink">⚡ &lt;10 active members</span>
+        <span class="stat-pill sp-orange">~25 registered</span>
+        <span class="stat-pill sp-yellow" style="color:var(--navy)">🤝 3 Rotary partner clubs</span>
+      </div>
+      <p>The Rotaract Club of Daystar Athi River was founded three years ago as part of Rotary International's global movement — one of 180,000+ clubs worldwide, united by the motto <em>"Service Above Self."</em> We operate under DUSA (Daystar University Student Association), which means our access to campus venues, resources, and institutional support runs through that relationship.</p>
+      <p>In our more active years, the club built real momentum. Two activities stood out as genuine highlights: the <span class="narrative-highlight">Annual Blood Drive</span> — a high-visibility community event that drew strong participation from members and the wider campus — and <span class="narrative-highlight">fellowship days out</span>, which members consistently remember as the moments they felt most connected to each other and to the club's spirit. These weren't just fun — they were proof that when Rotaract shows up with energy, people follow.</p>
+      <p>But over time, engagement gradually faded. There was no single crisis — no dramatic falling-out or sudden departure. It was a slow drift. The group became <span class="narrative-pink">less active as a whole</span>, which made it harder for any individual to feel like showing up mattered. Meetings lost momentum. Projects stalled without enough hands. Members who genuinely wanted to participate found themselves in a club that wasn't moving, and quietly stepped back. Today, of approximately 25 registered members, fewer than 10 are consistently active.</p>
+      <p>We also have three warm relationships with local Rotary clubs — <span class="narrative-highlight">Rotary Athi River, Rotary Stoni Athi, and Rotary Kitengela</span> — that we haven't engaged as intentionally as we could. These are untapped partnerships sitting right at our doorstep, with people who want to see us succeed.</p>
+      <p>This meeting is about being honest about where we are, and deliberate about what we do next. The foundation hasn't crumbled — it just needs us to build on it again, together.</p>
+    </div>
+  </div>
+
+  <!-- ════════ INTERVENTIONS ════════ -->
+  <div class="section-label">What we're doing — the ideas on the table</div>
+  <div class="cards-grid">
+
+    <!-- Idea 1: Member Survey -->
+    <div class="int-card" style="animation-delay:0.05s">
+      <div class="tape tape-h2"></div>
+      <div class="card-number n1">Idea #1</div>
+      <div class="card-week">Weeks 1–2</div>
+      <div class="card-title">Member Survey</div>
+      <div class="card-body">
+        Reach out personally — not just a group message — to all registered members via WhatsApp with a short Google Form. We already have a sense of why they drifted (inactivity, lack of sync). This survey goes deeper.
+      </div>
+      <ul class="card-points">
+        <li>Why did you originally join Rotaract?</li>
+        <li>How much do you actually know about Rotaract and what it offers?</li>
+        <li>Have you had any interaction with other Rotary / Rotaract / Interact groups? If yes — what worked in those contexts?</li>
+        <li>What would we need to fix or change for you to come back?</li>
+        <li>What's one thing you'd add or change about how Rotaract operates?</li>
+        <li>What would you want to contribute to a Rotaract group — skills, time, ideas, connections?</li>
+      </ul>
+      <span class="card-tag tag-pink">Listen before we lead</span>
+    </div>
+
+    <!-- Idea 2: Fellowship Day + Open Showcase -->
+    <div class="int-card n2-card" style="animation-delay:0.1s">
+      <div class="tape tape-h"></div>
+      <div class="card-number n2">Idea #2</div>
+      <div class="card-week">Weeks 3–4</div>
+      <div class="card-title">Fellowship Day + Open Showcase</div>
+      <div class="card-body">
+        A casual get-together that serves two purposes: a natural re-entry point for lapsed members, and an organic intro to Rotaract for interested students. What it looks like is for us to decide together — bring your ideas.
+      </div>
+      <ul class="card-points">
+        <li>Each member invites one person who isn't yet in the club</li>
+        <li>No formal agenda — reconnection over pressure</li>
+        <li>Share the club story naturally, not as a pitch</li>
+        <li>Distribute a simple interest/sign-up form for next semester</li>
+        <li>Document everything — photos, video — for social media</li>
+        <li>This event becomes the centrepiece of our recruitment content</li>
+      </ul>
+      <span class="card-tag tag-navy">Re-engagement + recruitment in one move</span>
+    </div>
+
+    <!-- Idea 3: Social Media Relaunch -->
+    <div class="int-card n3-card" style="animation-delay:0.15s">
+      <div class="tape tape-corner"></div>
+      <div class="card-number n3">Idea #3</div>
+      <div class="card-week">Week 1 — ongoing</div>
+      <div class="card-title">Social Media Relaunch</div>
+      <div class="card-body">
+        Assign a Social Media Officer and build a consistent posting rhythm. The goal is simple: by the time we invite people back, they should already be seeing us online and feeling the energy before they arrive.
+      </div>
+      <ul class="card-points">
+        <li>#RotaractIsBack — 5-post campaign, member faces + shared memories</li>
+        <li>3× per week on Instagram &amp; TikTok</li>
+        <li>Member Spotlight series — one real story per week</li>
+        <li>"Did You Know?" posts on Rotary scholarships &amp; RYLA</li>
+        <li>Live documentation of the Fellowship Day</li>
+        <li>Fellowship Day recap becomes next semester's main recruitment asset</li>
+      </ul>
+      <span class="card-tag tag-orange">Visibility before the pitch</span>
+    </div>
+
+    <!-- Idea 4: DUSA Partnership -->
+    <div class="int-card n4-card" style="animation-delay:0.2s">
+      <div class="tape tape-h2"></div>
+      <div class="card-number n4">Idea #4</div>
+      <div class="card-week">Weeks 2–3</div>
+      <div class="card-title">Formalise Our DUSA Relationship</div>
+      <div class="card-body">
+        We operate under DUSA — but how well do they actually know us and support us? A clear, active working relationship with DUSA makes everything else easier.
+      </div>
+      <ul class="card-points">
+        <li>Request a meeting with DUSA leadership to present our revitalisation plan</li>
+        <li>Establish a clear line of communication for planning events and projects</li>
+        <li>Clarify the process for accessing campus venues, funding, and transport</li>
+        <li>Ask DUSA to include us in next semester's orientation communications</li>
+        <li>Request contacts for any partners DUSA already works with — NGOs, sponsors, community organisations — that we could approach for unique project needs</li>
+        <li>Explore co-branded events where Rotaract provides service delivery and DUSA provides platform and resources</li>
+      </ul>
+      <span class="card-tag tag-yellow">Remove the friction, unlock the resources</span>
+    </div>
+
+    <!-- Idea 5: Recruitment Ready Package -->
+    <div class="int-card n5-card" style="animation-delay:0.25s">
+      <div class="tape tape-h"></div>
+      <div class="card-number n5">Idea #5</div>
+      <div class="card-week">Weeks 6–8</div>
+      <div class="card-title">Recruitment Ready Package</div>
+      <div class="card-body">
+        Before the semester ends, have everything built so Day 1 of next semester the club can hit the ground running — not scrambling.
+      </div>
+      <ul class="card-points">
+        <li>Recruitment flyer + digital sign-up form with QR code</li>
+        <li>60–90 sec club video filmed at the Fellowship Day</li>
+        <li>Open Day concept confirmed with DUSA/SRC</li>
+        <li>Prominently feature the Rotary Foundation Global Grant Scholarship</li>
+        <li>Next semester calendar skeleton in place before we break</li>
+      </ul>
+      <span class="card-tag tag-navy">Plant now, harvest next semester</span>
+    </div>
+
+  </div>
+
+  <!-- ════════ MEETING REDESIGN ════════ -->
+  <div class="section-label">How we meet — redesigning the meeting format</div>
+  <div class="meeting-card">
+    <div class="tape tape-h"></div>
+    <div class="meeting-card-title">A Meeting Worth Showing Up For</div>
+    <div class="meeting-card-sub">Every meeting should leave members feeling energised, informed, and connected — not like they wasted an hour. Here's the proposed structure:</div>
+    <div class="meeting-phases">
+      <div class="phase-block ph-pink">
+        <div class="phase-num">1</div>
+        <div class="phase-title">🎉 Icebreaker</div>
+        <div class="phase-body">Open every meeting with a fun, low-pressure activity that gets people talking and present. Rotate who leads it. Sets the tone — this is a space where people enjoy being.</div>
+      </div>
+      <div class="phase-block ph-navy">
+        <div class="phase-num">2</div>
+        <div class="phase-title">📚 Mini Rotary Training</div>
+        <div class="phase-body">A short, focused learning segment using materials and resources sourced from the Rotary Learning Centre. Builds members' knowledge of Rotaract's global programmes, scholarships, grants, and mission — so everyone can actually speak to what we do.</div>
+      </div>
+      <div class="phase-block ph-orange">
+        <div class="phase-num">3</div>
+        <div class="phase-title">💡 Project Brainstorm</div>
+        <div class="phase-body">A structured suggestions session: what issues exist within and around the campus community and environment? Members propose ideas, identify needs, and begin connecting them to possible project responses. This is how projects get born — from real voices, not top-down.</div>
+      </div>
+      <div class="phase-block ph-yellow">
+        <div class="phase-num">4</div>
+        <div class="phase-title">🌀 Free Style Close</div>
+        <div class="phase-body">An unstructured wind-down — casual conversation, check-ins, games, food, whatever feels right. People stay because they want to, not because the meeting hasn't ended yet. This is how friendships actually form.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ NEXT SEMESTER ════════ -->
+  <div class="section-label">What we're building toward — next semester</div>
+  <div class="next-sem-card">
+    <div class="tape tape-h" style="background:rgba(240,122,58,0.3)"></div>
+    <div class="next-sem-title">Partnerships &amp; Projects</div>
+    <div class="next-sem-sub">Lay the groundwork now so these are ready to activate when the new semester begins</div>
+    <div class="next-grid">
+      <div class="next-item">
+        <div class="next-item-title">🌐 Rotary Network Outreach</div>
+        <div class="next-item-body">Cast a wider net — reach out to any Interact, Rotaract, and Rotary clubs in the Athi River, Kitengela, and Machakos area. Attend a meeting, invite a speaker, explore RYLA nominations, and plant the seed for joint projects next semester.</div>
+      </div>
+      <div class="next-item">
+        <div class="next-item-title">🏫 Campus Club Collaborations</div>
+        <div class="next-item-body">Identify clubs with ties to our project ideas — Health Sciences, Environmental Club, Business Club. Invite them to connect with Rotaract for ideas that need external resources and support too, so the relationship flows both ways and gives us real reason to activate Rotary grants and partnerships.</div>
+      </div>
+      <div class="next-item">
+        <div class="next-item-title">🌍 External Community Partners</div>
+        <div class="next-item-body">Map NGOs, CBOs, churches, and local businesses in Athi River. Community survey results will tell us which partnerships are most relevant to the actual needs on the ground.</div>
+      </div>
+      <div class="next-item">
+        <div class="next-item-title">📋 Project Design</div>
+        <div class="next-item-body">No projects this semester — and that's intentional. Use this time to design 1–2 flagship projects grounded in real survey data and partner input, so next semester we launch with purpose and backing.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ════════ EXEC FEEDBACK ════════ -->
+  <div class="section-label">Exec team — drop your thoughts here 💬</div>
+  <div class="feedback-card">
+    <div class="tape tape-h"></div>
+    <div class="feedback-header">Ideas, Feedback &amp; Notes</div>
+    <div class="feedback-sub">Type a thought, tag it, and pin it to the board. Ctrl + Enter to submit quickly.</div>
+
+    <div class="fb-name-row">
+      <input class="fb-input" id="fb-name" placeholder="Your name (optional)" />
+      <input class="fb-input" id="fb-role" placeholder="Your role (e.g. President)" />
+    </div>
+    <div class="category-row" id="cat-row">
+      <button class="cat-btn active" onclick="selectCat(this)">General</button>
+      <button class="cat-btn" onclick="selectCat(this)">Survey</button>
+      <button class="cat-btn" onclick="selectCat(this)">Fellowship Day</button>
+      <button class="cat-btn" onclick="selectCat(this)">Social Media</button>
+      <button class="cat-btn" onclick="selectCat(this)">DUSA</button>
+      <button class="cat-btn" onclick="selectCat(this)">Meetings</button>
+      <button class="cat-btn" onclick="selectCat(this)">Partnerships</button>
+      <button class="cat-btn" onclick="selectCat(this)">Projects</button>
+    </div>
+    <textarea class="fb-textarea" id="fb-text" placeholder="Type a thought, suggestion, concern, or idea..."></textarea>
+    <button class="submit-btn" onclick="addThought()">Pin it ✦</button>
+
+    <div class="thoughts-board">
+      <div class="thoughts-title">Pinned thoughts</div>
+      <div class="thought-notes" id="notes-board">
+        <div class="empty-state" id="empty-msg">No thoughts pinned yet — be the first!</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Rotaract Club of Daystar Athi River &nbsp;·&nbsp; "Service Above Self" &nbsp;·&nbsp; Exec Strategy Session
+  </div>
+
+</div>
+
+<script>
+  let activeCategory = 'General';
+  function selectCat(btn) {
+    document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeCategory = btn.textContent.trim();
+  }
+  const catStyles = {
+    'General':        { bg: '#FFF8E7', color: '#1B2A4A' },
+    'Survey':         { bg: '#F4E0E8', color: '#7a1b35' },
+    'Fellowship Day': { bg: '#DCEAF5', color: '#1B2A4A' },
+    'Social Media':   { bg: '#FAE0C8', color: '#7a3010' },
+    'DUSA':           { bg: '#E8F0DC', color: '#2a4010' },
+    'Meetings':       { bg: '#EDE0F5', color: '#3a1b5a' },
+    'Partnerships':   { bg: '#E0F0EA', color: '#1b4a30' },
+    'Projects':       { bg: '#F5E8DC', color: '#4a2010' },
+  };
+  const rotations = [-2, 1.5, -1, 2.5, -1.5, 0.5, -2.5, 1, -0.5, 2];
+  let noteCount = 0;
+
+  function addThought() {
+    const text = document.getElementById('fb-text').value.trim();
+    if (!text) return;
+    const name = document.getElementById('fb-name').value.trim();
+    const role = document.getElementById('fb-role').value.trim();
+    const style = catStyles[activeCategory] || catStyles['General'];
+    const rot = rotations[noteCount % rotations.length];
+    const board = document.getElementById('notes-board');
+    const empty = document.getElementById('empty-msg');
+    if (empty) empty.remove();
+    const note = document.createElement('div');
+    note.className = 'thought-note';
+    note.style.cssText = `background:${style.bg};color:${style.color};transform:rotate(${rot}deg)`;
+    note.innerHTML = `
+      <button class="del-btn" onclick="this.parentElement.remove(); checkEmpty()">✕</button>
+      <span class="note-cat">${activeCategory}</span>
+      <div>${text}</div>
+      ${name ? `<div style="margin-top:8px;font-size:0.78rem;opacity:0.55">— ${name}${role ? ', ' + role : ''}</div>` : ''}
+    `;
+    board.appendChild(note);
+    document.getElementById('fb-text').value = '';
+    noteCount++;
+  }
+  function checkEmpty() {
+    const board = document.getElementById('notes-board');
+    if (board.children.length === 0) {
+      const d = document.createElement('div');
+      d.className = 'empty-state'; d.id = 'empty-msg';
+      d.textContent = 'No thoughts pinned yet — be the first!';
+      board.appendChild(d);
+    }
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.ctrlKey) addThought(); });
+</script>
+</body>
+</html>
