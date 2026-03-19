@@ -737,13 +737,34 @@
 
 </div>
 
-<script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.11.0/firebase-app.js";
+  import { getDatabase, ref, push, onValue, remove }
+    from "https://www.gstatic.com/firebasejs/12.11.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyA2OyLKU0J7BueFcbDb7QYuPUw5ek6hehk",
+    authDomain: "rcdar-revitalizationplan.firebaseapp.com",
+    databaseURL: "https://rcdar-revitalizationplan-default-rtdb.firebaseio.com",
+    projectId: "rcdar-revitalizationplan",
+    storageBucket: "rcdar-revitalizationplan.firebasestorage.app",
+    messagingSenderId: "847487181160",
+    appId: "1:847487181160:web:9cf9727dd862cbff75b6dd",
+    measurementId: "G-HRBNHLY0KQ"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getDatabase(app);
+  const notesRef = ref(db, 'notes');
+
+  // Category selection
   let activeCategory = 'General';
-  function selectCat(btn) {
+  window.selectCat = function(btn) {
     document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     activeCategory = btn.textContent.trim();
-  }
+  };
+
   const catStyles = {
     'General':        { bg: '#FFF8E7', color: '#1B2A4A' },
     'Survey':         { bg: '#F4E0E8', color: '#7a1b35' },
@@ -757,39 +778,65 @@
   const rotations = [-2, 1.5, -1, 2.5, -1.5, 0.5, -2.5, 1, -0.5, 2];
   let noteCount = 0;
 
-  function addThought() {
+  // Save a new note to Firebase
+  window.addThought = function() {
     const text = document.getElementById('fb-text').value.trim();
     if (!text) return;
     const name = document.getElementById('fb-name').value.trim();
     const role = document.getElementById('fb-role').value.trim();
-    const style = catStyles[activeCategory] || catStyles['General'];
-    const rot = rotations[noteCount % rotations.length];
-    const board = document.getElementById('notes-board');
-    const empty = document.getElementById('empty-msg');
-    if (empty) empty.remove();
+    push(notesRef, {
+      text, name, role,
+      category: activeCategory,
+      timestamp: Date.now()
+    });
+    document.getElementById('fb-text').value = '';
+  };
+
+  // Delete a note from Firebase
+  window.deleteNote = function(id) {
+    remove(ref(db, 'notes/' + id));
+  };
+
+  // Render one note onto the board
+  function renderNote(id, data) {
+    const style = catStyles[data.category] || catStyles['General'];
+    const rot   = rotations[noteCount % rotations.length];
+    noteCount++;
     const note = document.createElement('div');
     note.className = 'thought-note';
     note.style.cssText = `background:${style.bg};color:${style.color};transform:rotate(${rot}deg)`;
     note.innerHTML = `
-      <button class="del-btn" onclick="this.parentElement.remove(); checkEmpty()">✕</button>
-      <span class="note-cat">${activeCategory}</span>
-      <div>${text}</div>
-      ${name ? `<div style="margin-top:8px;font-size:0.78rem;opacity:0.55">— ${name}${role ? ', ' + role : ''}</div>` : ''}
+      <button class="del-btn" onclick="deleteNote('${id}')">✕</button>
+      <span class="note-cat">${data.category}</span>
+      <div>${data.text}</div>
+      ${data.name ? `<div style="margin-top:8px;font-size:0.78rem;opacity:0.55">— ${data.name}${data.role ? ', ' + data.role : ''}</div>` : ''}
     `;
-    board.appendChild(note);
-    document.getElementById('fb-text').value = '';
-    noteCount++;
+    return note;
   }
-  function checkEmpty() {
+
+  // Listen for real-time changes — fires on load and on every update
+  onValue(notesRef, (snapshot) => {
     const board = document.getElementById('notes-board');
-    if (board.children.length === 0) {
-      const d = document.createElement('div');
-      d.className = 'empty-state'; d.id = 'empty-msg';
-      d.textContent = 'No thoughts pinned yet — be the first!';
-      board.appendChild(d);
+    board.innerHTML = '';
+    noteCount = 0;
+    const data = snapshot.val();
+    if (!data) {
+      const empty = document.createElement('div');
+      empty.className = 'empty-state';
+      empty.id = 'empty-msg';
+      empty.textContent = 'No thoughts pinned yet — be the first!';
+      board.appendChild(empty);
+      return;
     }
-  }
-  document.addEventListener('keydown', e => { if (e.key === 'Enter' && e.ctrlKey) addThought(); });
+    Object.entries(data)
+      .sort(([, a], [, b]) => a.timestamp - b.timestamp)
+      .forEach(([id, noteData]) => board.appendChild(renderNote(id, noteData)));
+  });
+
+  // Ctrl+Enter shortcut
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && e.ctrlKey) window.addThought();
+  });
 </script>
 </body>
 </html>
